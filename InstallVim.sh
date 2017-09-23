@@ -44,12 +44,12 @@ sudo aptitude install vim-addon-manager vim-scripts
 vim-addons install enhanced-commentify
 echo "Configuring: Auto Pairs"
 wget https://raw.githubusercontent.com/jiangmiao/auto-pairs/master/plugin/auto-pairs.vim -O ~/.vim/plugin/auto-pairs.vim
-echo "Configuring YCM..."
-sudo apt-get install -y build-essential cmake python-dev python3-dev
-cd ~/.vim/bundle/YouCompleteMe
-./install.py --clang-completer
 echo "Installing VundleVim..."
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 echo "Apply Plugins..."
 vim +PluginInstall +qall
+echo "Configuring YCM..."
+sudo apt-get install -y build-essential cmake python-dev python3-dev
+cd ~/.vim/bundle/YouCompleteMe
+./install.py --clang-completer
 echo "All Completed!!!"
