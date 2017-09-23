@@ -48,6 +48,8 @@ echo "Configuring YCM..."
 sudo apt-get install -y build-essential cmake python-dev python3-dev
 cd ~/.vim/bundle/YouCompleteMe
 ./install.py --clang-completer
+echo "Installing VundleVim..."
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 echo "Apply Plugins..."
 vim +PluginInstall
 echo "All Completed!!!"
