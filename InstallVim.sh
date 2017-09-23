@@ -17,22 +17,22 @@ echo "Compiling Vim from source..."
 echo "Vim removing..."
 sudo apt-get remove -y vim vim-runtime gvim vim-tiny vim-common vim-gui-common vim-nox
 echo "Installing essential tools..."
-sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git checkinstall
+sudo apt-get install -y --fix-missing libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git checkinstall
 echo "Vim cloning..."
 cd ~
 git clone https://github.com/vim/vim.git
 cd vim
 ./configure --with-features=huge \
-            --enable-multibyte \
-            --enable-rubyinterp=yes \
-            --enable-pythoninterp=yes \
-            --enable-python3interp=yes \
-			--with-python3-config-dir=/usr/lib/$(ls /usr/lib/ | grep python3.)/$(GetPythonConfigName) \
-            --enable-perlinterp=yes \
-            --enable-luainterp=yes \
-            --enable-gui=gtk2 \
-            --enable-cscope \
-            --prefix=/usr/local
+	--enable-multibyte \
+	--enable-rubyinterp=yes \
+	--enable-pythoninterp=yes \
+	--enable-python3interp=yes \
+	--with-python3-config-dir=/usr/lib/$(ls /usr/lib/ | grep python3.)/$(GetPythonConfigName) \
+	--enable-perlinterp=yes \
+	--enable-luainterp=yes \
+	--enable-gui=gtk2 \
+	--enable-cscope \
+	--prefix=/usr/local
 make VIMRUNTIMEDIR=/usr/local/share/vim/vim80
 echo "Vim installing..."
 sudo checkinstall -y
@@ -40,7 +40,7 @@ sudo dpkg -i ~/vim/$(GetVimInstallPackageName)
 echo "Vim installed"
 wget https://raw.githubusercontent.com/fsps60312/RandomCode/master/.vimrc -O ~/.vimrc
 echo "Configuring: \\x to comment/uncomment"
-sudo apt-get install -y aptitude
+sudo apt-get install -y --fix-missing aptitude
 sudo aptitude install vim-addon-manager vim-scripts
 vim-addons install enhanced-commentify
 echo "Installing VundleVim..."
@@ -50,7 +50,7 @@ wget https://raw.githubusercontent.com/jiangmiao/auto-pairs/master/plugin/auto-p
 echo "Apply Plugins..."
 vim +PluginInstall +qall
 echo "Configuring YCM..."
-sudo apt-get install -y build-essential cmake python-dev python3-dev
+sudo apt-get install --fix-missing -y build-essential cmake python-dev python3-dev
 cd ~/.vim/bundle/YouCompleteMe
 sudo ./install.py --clang-completer
 sudo wget https://raw.githubusercontent.com/Valloric/ycmd/master/cpp/ycm/.ycm_extra_conf.py -O ~/.vim/.ycm_extra_conf.py
