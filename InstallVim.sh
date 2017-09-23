@@ -27,7 +27,7 @@ cd vim
             --enable-rubyinterp=yes \
             --enable-pythoninterp=yes \
             --enable-python3interp=yes \
-			--with-python3-config-dir=/usr/lib/python3.5/$(GetPythonConfigName) \
+			--with-python3-config-dir=/usr/lib/$(ls /usr/lib/ | grep python3.)/$(GetPythonConfigName) \
             --enable-perlinterp=yes \
             --enable-luainterp=yes \
             --enable-gui=gtk2 \
