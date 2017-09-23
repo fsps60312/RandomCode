@@ -42,7 +42,7 @@ echo "Vim installed"
 wget https://raw.githubusercontent.com/fsps60312/RandomCode/master/.vimrc -O ~/.vimrc
 echo "Configuring: \\x to comment/uncomment"
 sudo apt-get install -y --fix-missing aptitude
-sudo aptitude install vim-addon-manager vim-scripts
+sudo aptitude install -y vim-addon-manager vim-scripts
 vim-addons install enhanced-commentify
 echo "Installing VundleVim..."
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
