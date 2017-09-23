@@ -35,7 +35,7 @@ cd vim
             --prefix=/usr/local
 make VIMRUNTIMEDIR=/usr/local/share/vim/vim80
 echo "Vim installing..."
-sudo checkinstall
+sudo checkinstall -y
 sudo dpkg -i ~/vim/$(GetVimInstallPackageName)
 echo "Vim installed"
 wget https://raw.githubusercontent.com/fsps60312/RandomCode/master/.vimrc -O ~/.vimrc
