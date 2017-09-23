@@ -52,5 +52,6 @@ vim +PluginInstall +qall
 echo "Configuring YCM..."
 sudo apt-get install -y build-essential cmake python-dev python3-dev
 cd ~/.vim/bundle/YouCompleteMe
-./install.py --clang-completer
+sudo ./install.py --clang-completer
+sudo wget https://raw.githubusercontent.com/Valloric/ycmd/master/cpp/ycm/.ycm_extra_conf.py -O ~/.vim/.ycm_extra_conf.py
 echo "All Completed!!!"
