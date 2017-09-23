@@ -42,10 +42,10 @@ wget https://raw.githubusercontent.com/fsps60312/RandomCode/master/.vimrc -O ~/.
 echo "Configuring: \\x to comment/uncomment"
 sudo aptitude install vim-addon-manager vim-scripts
 vim-addons install enhanced-commentify
-echo "Configuring: Auto Pairs"
-wget https://raw.githubusercontent.com/jiangmiao/auto-pairs/master/plugin/auto-pairs.vim -O ~/.vim/plugin/auto-pairs.vim
 echo "Installing VundleVim..."
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+echo "Configuring: Auto Pairs"
+wget https://raw.githubusercontent.com/jiangmiao/auto-pairs/master/plugin/auto-pairs.vim -O ~/.vim/plugin/auto-pairs.vim
 echo "Apply Plugins..."
 vim +PluginInstall +qall
 echo "Configuring YCM..."
