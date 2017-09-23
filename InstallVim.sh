@@ -40,6 +40,7 @@ sudo dpkg -i ~/vim/$(GetVimInstallPackageName)
 echo "Vim installed"
 wget https://raw.githubusercontent.com/fsps60312/RandomCode/master/.vimrc -O ~/.vimrc
 echo "Configuring: \\x to comment/uncomment"
+sudo apt-get install -y aptitude
 sudo aptitude install vim-addon-manager vim-scripts
 vim-addons install enhanced-commentify
 echo "Installing VundleVim..."
