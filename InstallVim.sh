@@ -15,6 +15,7 @@ GetVimInstallPackageName(){
 
 echo "Compiling Vim from source..."
 echo "Vim removing..."
+rm -rf vim .vim
 sudo apt-get remove -y vim vim-runtime gvim vim-tiny vim-common vim-gui-common vim-nox
 echo "Installing essential tools..."
 sudo apt-get update
