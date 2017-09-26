@@ -55,8 +55,8 @@ noremap <F3> :Autoformat<CR>
 inoremap <F3> :Autoformat<CR>
 noremap <F9>  <Esc>:w<CR>:!g++ -std=c++11 -Wall -Wextra -Wconversion -Wshadow % -o %.o && echo -e "\n------------------------------"<CR>
 inoremap <F9>  <Esc>:w<CR>:!g++ -std=c++11 -Wall -Wextra -Wconversion -Wshadow % -o %.o && echo -e "\n------------------------------"<CR>
-noremap <F11> <Esc>:w<CR>:!g++ -std=c++11 -Wall -Wextra -Wconversion -Wshadow % -o %.o && echo -e "\n------------------------------" && ./%.o<CR>
-inoremap <F11> <Esc>:w<CR>:!g++ -std=c++11 -Wall -Wextra -Wconversion -Wshadow % -o %.o && echo -e "\n------------------------------" && ./%.o<CR>
+noremap <F12> <Esc>:w<CR>:!g++ -std=c++11 -Wall -Wextra -Wconversion -Wshadow % -o %.o && echo -e "\n------------------------------" && ./%.o<CR>
+inoremap <F12> <Esc>:w<CR>:!g++ -std=c++11 -Wall -Wextra -Wconversion -Wshadow % -o %.o && echo -e "\n------------------------------" && ./%.o<CR>
 
 set bg=dark
 set autoindent
