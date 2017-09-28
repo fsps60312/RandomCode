@@ -68,3 +68,8 @@ set tabstop=4
 set shiftwidth=4
 set mouse=a
 set backspace=indent,eol,start
+
+set foldmethod=indent   
+set foldnestmax=10
+"set guifont=Consolas
+set ruler
