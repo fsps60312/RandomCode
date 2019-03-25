@@ -6,20 +6,23 @@ GetPythonConfigName(){
 	echo $s
 }
 
-GetVimInstallPackageName(){
-	ls ~/vim | grep vim.*\.deb
-}
 
 #echo $(GetPythonConfigName)
 #return
-
+sudo apt update && sudo apt autoremove -y
+'''
+###############################################################################
+### If installation failed, consider re-compiling vim of the latest version ###
+##############################################################################
+GetVimInstallPackageName(){
+	ls ~/vim | grep vim.*\.deb
+}
 echo "Compiling Vim from source..."
 echo "Vim removing..."
 sudo rm -rf vim .vim
-sudo apt-get remove -y vim vim-runtime gvim vim-tiny vim-common vim-gui-common vim-nox
+sudo apt remove -y vim vim-runtime gvim vim-tiny vim-common vim-gui-common vim-nox
 echo "Installing essential tools..."
-sudo apt-get update
-sudo apt-get install -y --fix-missing libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git checkinstall
+sudo apt install -y --fix-missing libncurses5-dev libgnome2-dev libgnomeui-dev libgtk2.0-dev libatk1.0-dev libbonoboui2-dev libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git checkinstall
 echo "Vim cloning..."
 cd ~
 git clone https://github.com/vim/vim.git
@@ -40,10 +43,11 @@ echo "Vim installing..."
 sudo checkinstall -y
 sudo dpkg -i ~/vim/$(GetVimInstallPackageName)
 echo "Vim installed"
+'''
 wget https://raw.githubusercontent.com/fsps60312/RandomCode/master/.vimrc -O ~/.vimrc
 echo "Configuring: \\x to comment/uncomment"
-sudo apt-get install -y --fix-missing aptitude
-sudo aptitude install -y vim-addon-manager vim-scripts
+sudo apt install -y --fix-missing aptitude
+sudo aptitude install -y vim-addon-manager vim-scripts git
 vim-addons install enhanced-commentify
 echo "Installing VundleVim..."
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -52,8 +56,8 @@ wget https://raw.githubusercontent.com/jiangmiao/auto-pairs/master/plugin/auto-p
 echo "Apply Plugins..."
 vim +PluginInstall +qall
 echo "Configuring YCM..."
-sudo apt-get install --fix-missing -y build-essential cmake python-dev python3-dev
+sudo apt install --fix-missing -y build-essential cmake python-dev python3-dev
 cd ~/.vim/bundle/YouCompleteMe
 sudo ./install.py --clang-completer
-sudo wget https://raw.githubusercontent.com/Valloric/ycmd/master/cpp/ycm/.ycm_extra_conf.py -O ~/.vim/.ycm_extra_conf.py
+sudo wget https://raw.githubusercontent.com/Valloric/ycmd/master/.ycm_extra_conf.py -O ~/.vim/.ycm_extra_conf.py
 echo "All Completed!!!"
