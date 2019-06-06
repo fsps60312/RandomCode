@@ -10,6 +10,7 @@ GetPythonConfigName(){
 #echo $(GetPythonConfigName)
 #return
 sudo apt update && sudo apt autoremove -y
+sudo apt install --fix-missing -y vim
 ###############################################################################
 ### If installation failed, consider re-compiling vim of the latest version ###
 ##############################################################################
