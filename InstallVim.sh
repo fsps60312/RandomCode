@@ -55,8 +55,10 @@ wget https://raw.githubusercontent.com/jiangmiao/auto-pairs/master/plugin/auto-p
 echo "Apply Plugins..."
 vim +PluginInstall +qall
 echo "Configuring YCM..."
-sudo apt install --fix-missing -y build-essential cmake python-dev python3-dev
+sudo apt install --fix-missing -y build-essential cmake python3-dev
+#sudo apt install --fix-missing -y build-essential cmake python-dev python3-dev
 cd ~/.vim/bundle/YouCompleteMe
 sudo ./install.py --clang-completer
-sudo wget https://raw.githubusercontent.com/Valloric/ycmd/master/.ycm_extra_conf.py -O ~/.vim/.ycm_extra_conf.py
+#sudo wget https://raw.githubusercontent.com/Valloric/ycmd/master/.ycm_extra_conf.py -O ~/.vim/.ycm_extra_conf.py
+sudo wget https://raw.githubusercontent.com/Valloric/ycmd/66030cd94299114ae316796f3cad181cac8a007c/.ycm_extra_conf.py -O ~/.vim/.ycm_extra_conf.py
 echo "All Completed!!!"
