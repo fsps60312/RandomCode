@@ -55,10 +55,10 @@ noremap <F3> :Autoformat<CR>
 inoremap <F3> :Autoformat<CR>
 noremap <F12> :YcmCompleter GoToDefinitionElseDeclaration<CR>
 inoremap <F12> :YcmCompleter GoToDefinitionElseDeclaration<CR>
-noremap <F9>  <Esc>:w<CR>:!g++ -std=c++11 -Wall -Wextra -Wconversion -Wshadow -fsanitize=address -fsanitize=undefined -fsanitize-address-use-after-scope -fsanitize=signed-integer-overflow % -o %.o && echo -e "\n------------------------------"<CR>
-inoremap <F9>  <Esc>:w<CR>:!g++ -std=c++11 -Wall -Wextra -Wconversion -Wshadow -fsanitize=address -fsanitize=undefined -fsanitize-address-use-after-scope -fsanitize=signed-integer-overflow % -o %.o && echo -e "\n------------------------------"<CR>
-noremap <F5> <Esc>:w<CR>:!g++ -std=c++11 -Wall -Wextra -Wconversion -Wshadow -fsanitize=address -fsanitize=undefined -fsanitize-address-use-after-scope -fsanitize=signed-integer-overflow % -o %.o && echo -e "\n------------------------------" && ./%.o<CR>
-inoremap <F5> <Esc>:w<CR>:!g++ -std=c++11 -Wall -Wextra -Wconversion -Wshadow -fsanitize=address -fsanitize=undefined -fsanitize-address-use-after-scope -fsanitize=signed-integer-overflow % -o %.o && echo -e "\n------------------------------" && ./%.o<CR>
+noremap <F9>  <Esc>:w<CR>:!g++ -std=c++11 -Wall -Wextra -Wconversion -Wshadow -fsanitize=address -fsanitize=undefined -fsanitize-address-use-after-scope -fsanitize=signed-integer-overflow % -o %<.o && echo -e "\n------------------------------"<CR>
+inoremap <F9>  <Esc>:w<CR>:!g++ -std=c++11 -Wall -Wextra -Wconversion -Wshadow -fsanitize=address -fsanitize=undefined -fsanitize-address-use-after-scope -fsanitize=signed-integer-overflow % -o %<.o && echo -e "\n------------------------------"<CR>
+noremap <F5> <Esc>:w<CR>:!g++ -std=c++11 -Wall -Wextra -Wconversion -Wshadow -fsanitize=address -fsanitize=undefined -fsanitize-address-use-after-scope -fsanitize=signed-integer-overflow % -o %<.o && echo -e "\n------------------------------" && ./%<.o<CR>
+inoremap <F5> <Esc>:w<CR>:!g++ -std=c++11 -Wall -Wextra -Wconversion -Wshadow -fsanitize=address -fsanitize=undefined -fsanitize-address-use-after-scope -fsanitize=signed-integer-overflow % -o %<.o && echo -e "\n------------------------------" && ./%<.o<CR>
 
 set bg=dark
 set autoindent
