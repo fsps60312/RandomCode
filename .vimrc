@@ -5,9 +5,9 @@ set nowrap
 set bg=dark
 set foldmethod=indent
 set expandtab  " never wanna see a '\t' in your file, tabs keypresses will be expanded into spaces
-set softtabstop=4  " how many columns of whitespace is a 'tab' keypress or a 'backspace' keypress worth
-set tabstop=4
-set shiftwidth=4
+set softtabstop=2  " how many columns of whitespace is a 'tab' keypress or a 'backspace' keypress worth
+set tabstop=2
+set shiftwidth=2
 syntax on
 
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
@@ -163,3 +163,131 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+
+function SubstrWindow(l, r, i, s)
+  if a:i <= a:r && a:i + +strlen(a:s) > a:l
+    return a:s[max([0, a:l-a:i]):min([strlen(a:s)-1, a:r-a:i])]
+  else
+    return ''
+  endif
+endfunction
+
+function StartsWithAndCut(s, prefix)
+  if a:s[:strlen(a:prefix)-1] == a:prefix
+    return [v:true, a:s[strlen(a:prefix):]]
+  else
+    return [v:false, a:s]
+  endif
+endfunction
+
+function ReduceBufname(name)
+  let name = a:name
+  let home = $HOME . '/'
+  let thom = '~/' " Tilde home "
+  let root = '/'
+  let [is_from_home, name] = StartsWithAndCut(name, home)
+  let [is_from_thom, name] = StartsWithAndCut(name, thom)
+  let [is_from_root, name] = StartsWithAndCut(name, root)
+  let split_name_list = split(name, '/')
+  if empty(split_name_list)
+    return ''
+  elseif len(split_name_list) == 1
+    let name = split_name_list[0]
+  else
+    let name_list_maxlen = 5
+    let [dirname, name_list, basename] = [split_name_list[0], split_name_list[1:-2], split_name_list[-1]]
+    call map(name_list, {idx, val -> val[0:0] . '/'})
+    if len(name_list) > name_list_maxlen + 2 " name_list_too_long "
+      let name = dirname. '/../' . join(name_list[-name_list_maxlen:], '') . basename
+    else
+      let name = dirname . '/' . join(name_list, '') . basename
+    endif
+  endif
+  if is_from_home || is_from_thom
+    let name = '~/' . name
+  endif
+  if is_from_root
+    let name = '/' . name
+  endif
+  return name
+endfunction
+
+function MyTabLabel(n)
+  let label = string(a:n) . ':'
+  let bufnrlist = tabpagebuflist(a:n)
+
+  " Add '+' if one of the buffers in the tab page is modified "
+  for bufnr in bufnrlist
+    if getbufvar(bufnr, "&modified")
+      let label .= '+'
+      break
+    endif
+  endfor
+
+  " Append the number of windows in the tab page if more than one "
+  if len(bufnrlist) > 1
+    let label .= len(bufnrlist)
+  endif
+
+  " Append the buffer name "
+  let l:bufname = bufname(bufnrlist[tabpagewinnr(a:n) - 1])
+  let label = label . ' ' . ReduceBufname(l:bufname)
+
+  return label
+endfunction
+
+function MyTabLine()
+  let g:tlss = range(tabpagenr('$')) " tablabelstrs "
+  let term_width = winwidth('%')
+  call map(g:tlss, {idx, val -> '_' . MyTabLabel(val+1) . ' '})
+  call map(g:tlss, {idx, val -> strlen(val) <= term_width-2 ? val : (val[:term_width/2] . '...' . val[-(term_width-term_width/2-1-5):])})
+  let [tab_i, tab_n] = [tabpagenr(), tabpagenr('$')]
+  let tabcharpos = [0]
+  let li = 0
+  for val in g:tlss
+    let li += strlen(val)
+    let tabcharpos += [li]
+  endfor
+  let s:tablineoffset = exists('s:tablineoffset') ? s:tablineoffset : 0
+  let s:tablineoffset = min([s:tablineoffset, tabcharpos[tab_i-1], tabcharpos[-1] - term_width])
+  let s:tablineoffset = max([s:tablineoffset, tabcharpos[tab_i] - term_width, 0])
+  let [left_arrow, rigt_arrow, stick_rigt] = [s:tablineoffset > 0, s:tablineoffset < tabcharpos[-1] - term_width, s:tablineoffset == tabcharpos[tab_i] - term_width]
+  if rigt_arrow
+    let term_width -= 1
+    if stick_rigt
+      let s:tablineoffset += 1
+      let left_arrow = v:true
+    endif
+  endif
+  if left_arrow
+    let term_width -= 1
+    if stick_rigt
+      let s:tablineoffset += 1
+    endif
+  endif
+  echo tabcharpos[0] . '-{' . s:tablineoffset . '-[' . tabcharpos[tab_i-1] . '-' . (tabcharpos[tab_i]-1) . ']-' . (s:tablineoffset+term_width-1) . '}-' . (tabcharpos[-1]-1) . ' ' . (tabcharpos[tab_i]-tabcharpos[tab_i-1]) . '/' . term_width . '/' . (tabcharpos[-1]-tabcharpos[0])
+  call map(g:tlss, {i, val -> SubstrWindow(s:tablineoffset, s:tablineoffset+term_width-1, tabcharpos[i], val)})
+
+  let tlex = range(tab_n) " tab_line_expression "
+  call map(tlex, {i, val -> (i+1==tab_i ? '%#TabLineSel#' : '%#TabLine#') . '%' . (i+1) . 'T%{tlss[' . i . ']}'})
+  let tlex = join (tlex, '')
+  if left_arrow
+    let tlex = '%#TabLineFill#<' . tlex
+  endif
+  if rigt_arrow
+    let tlex = tlex . '%#TabLineFill#>'
+  endif
+
+  " after the last tab fill with TabLineFill and reset tab page nr "
+  let tlex .= '%#TabLineFill#%T'
+
+  " right-align the label to close the current tab page "
+  " if tabpagenr('$') > 1 && 0 "
+  "   let tlex .= '%=%#TabLine#%999Xclose' "
+  " endif "
+
+  return tlex
+endfunction
+
+set tabline=%!MyTabLine()
